@@ -1,0 +1,52 @@
+.control-panel {
+  display: flex;
+  padding: 14px 18px;
+  background-color: #f1f5f9;
+  border-bottom: 1px solid #d1d5db;
+  gap: 14px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.control-panel button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-node-btn {
+  background: linear-gradient(145deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.add-node-btn:hover {
+  background: linear-gradient(145deg, #16a34a, #15803d);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(22, 163, 74, 0.35);
+}
+
+.layout-btn {
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.layout-btn:hover {
+  background: linear-gradient(145deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+.control-panel button:focus {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.control-panel button:active {
+  transform: scale(0.97);
+}
