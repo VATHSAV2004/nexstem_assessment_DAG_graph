@@ -21,25 +21,27 @@
 }
 
 .add-node-btn {
-  background: linear-gradient(145deg, #22c55e, #16a34a);
+  background: linear-gradient(145deg, #9333ea, #980ae0);
   color: white;
 }
 
 .add-node-btn:hover {
-  background: linear-gradient(145deg, #16a34a, #15803d);
+  color: #980ae0;
+  background: linear-gradient(145deg, white,white);
   transform: translateY(-1px);
   box-shadow: 0 6px 12px rgba(22, 163, 74, 0.35);
 }
 
 .layout-btn {
-  background: linear-gradient(145deg, #3b82f6, #2563eb);
-  color: white;
+  background: linear-gradient(145deg, white, white);
+  color: #980ae0;
 }
 
 .layout-btn:hover {
-  background: linear-gradient(145deg, #2563eb, #1d4ed8);
+  background: linear-gradient(145deg, #980ae0, #980ae0);
   transform: translateY(-1px);
   box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+  color:white;
 }
 
 .control-panel button:focus {

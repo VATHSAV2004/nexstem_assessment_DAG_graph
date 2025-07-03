@@ -2,14 +2,18 @@ import React from 'react';
 import { Handle, Position } from 'reactflow';
 import './index.css';
 
-const CustomNode = ({ data }) => {
+function CustomNode({ id, data }) {
   return (
     <div className="custom-node">
-      <Handle type="target" position={Position.Left} />
+      <Handle type="target" position={Position.Left} className="react-flow__handle-left" />
+      
       <div className="label">{data.label}</div>
-      <Handle type="source" position={Position.Right} />
+
+      <button className="deletebutton" onClick={() => data.deleteNode(id)}>X</button>
+
+      <Handle type="source" position={Position.Right} className="react-flow__handle-right" />
     </div>
   );
-};
+}
 
 export default CustomNode;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Modal from '../Modal';
 
 import ReactFlow, {
@@ -8,7 +8,7 @@ import ReactFlow, {
   useEdgesState,
   Controls as FlowControls,
   Background,
-  MiniMap
+  MiniMap,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './index.css';
@@ -20,8 +20,6 @@ import StatusMessage from '../StatusMessage';
 import { validateDag } from '../../utils/validation';
 import { getLayoutedElements } from '../../utils/layout';
 
-const nodeTypes = { custom: CustomNode };
-
 function PipelineEditor() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -30,10 +28,7 @@ function PipelineEditor() {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-
-  const onInit = (instance) => {
-    setReactFlowInstance(instance);
-  };
+  const onInit = (instance) => setReactFlowInstance(instance);
 
   const onConnect = useCallback(
     (params) => {
@@ -46,33 +41,41 @@ function PipelineEditor() {
   );
 
   const addNode = (label) => {
-  const newNode = {
-    id: `${+new Date()}`,
-    type: 'custom',
-    position: { x: Math.random() * 400, y: Math.random() * 400 },
-    data: { label },
+    const newNode = {
+      id: `${+new Date()}`,
+      type: 'custom',
+      position: { x: Math.random() * 400, y: Math.random() * 400 },
+      data: { label }, 
+    };
+
+    setNodes((nds) => [...nds, newNode]);
+
+    setTimeout(() => {
+      if (reactFlowInstance) {
+        reactFlowInstance.fitView();
+      }
+    }, 100);
   };
 
-  setNodes((nds) => [...nds, newNode]);
-
-  setTimeout(() => {
-    if (reactFlowInstance) {
-      reactFlowInstance.fitView();
-    }
-  }, 100);
-};
-
+  const deleteNode = useCallback((id) => {
+    setNodes((nds) => nds.filter((n) => n.id !== id));
+    setEdges((eds) =>
+      eds.filter((e) => e.source !== id && e.target !== id)
+    );
+  }, []);
 
   const deleteSelected = useCallback(() => {
+    const selectedNodeIds = nodes.filter(n => n.selected).map(n => n.id);
     setNodes((nds) => nds.filter((n) => !n.selected));
     setEdges((eds) =>
       eds.filter(
         (e) =>
           !e.selected &&
-          !nodes.find((n) => n.id === e.source || n.id === e.target)?.selected
+          !selectedNodeIds.includes(e.source) &&
+          !selectedNodeIds.includes(e.target)
       )
     );
-  }, [nodes, edges]);
+  }, [nodes]);
 
   useEffect(() => {
     const handler = (e) => {
@@ -98,21 +101,29 @@ function PipelineEditor() {
     }
   };
 
+  const nodeTypes = useMemo(() => ({
+    custom: (props) => (
+      <CustomNode {...props} deleteNode={deleteNode} />
+    )
+  }), [deleteNode]);
+
   return (
     <div className="editor">
       <ReactFlowProvider>
         <div className="graph-panel">
           <Controls onAddNode={() => setShowModal(true)} onAutoLayout={onLayout} />
-<Modal
-  visible={showModal}
-  onClose={() => setShowModal(false)}
-  onSubmit={(label) => {
-    addNode(label);
-    setShowModal(false);
-  }}
-/>
+
+          <Modal
+            visible={showModal}
+            onClose={() => setShowModal(false)}
+            onSubmit={(label) => {
+              addNode(label);
+              setShowModal(false);
+            }}
+          />
 
           <StatusMessage status={isValidDag} />
+
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -123,6 +134,7 @@ function PipelineEditor() {
             nodeTypes={nodeTypes}
             onInit={onInit}
             fitView
+            
           >
             <FlowControls />
             <MiniMap />

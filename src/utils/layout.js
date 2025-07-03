@@ -1,14 +1,21 @@
 import dagre from 'dagre';
 
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
+const nodeWidth = 172;
+const nodeHeight = 36;
 
 export const getLayoutedElements = (nodes, edges, direction = 'LR') => {
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
+
   const isHorizontal = direction === 'LR';
-  dagreGraph.setGraph({ rankdir: direction });
+  dagreGraph.setGraph({
+    rankdir: direction,
+    nodesep: 100,     
+    ranksep: 120,    
+  });
 
   nodes.forEach((node) => {
-    dagreGraph.setNode(node.id, { width: 150, height: 50 });
+    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
   });
 
   edges.forEach((edge) => {
@@ -19,13 +26,11 @@ export const getLayoutedElements = (nodes, edges, direction = 'LR') => {
 
   const layoutedNodes = nodes.map((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    return {
-      ...node,
-      position: {
-        x: nodeWithPosition.x - 75,
-        y: nodeWithPosition.y - 25,
-      },
+    node.position = {
+      x: nodeWithPosition.x - nodeWidth / 2,
+      y: nodeWithPosition.y - nodeHeight / 2,
     };
+    return node;
   });
 
   return { layoutedNodes, layoutedEdges: edges };
