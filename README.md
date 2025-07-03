@@ -93,7 +93,7 @@ src/
 
 ## 🎥 Screen Recording
 
-📽️ [Watch on Loom / YouTube / Google Drive](https://your-video-link)
+📽️ [Watch on Google Drive](https://drive.google.com/file/d/1TTjmE56QggNzsg4uxzhQKWAyiceu_v48/view?usp=sharing)
 
 ---
 
