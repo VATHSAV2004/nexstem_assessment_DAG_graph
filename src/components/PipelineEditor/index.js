@@ -45,7 +45,7 @@ function PipelineEditor() {
       id: `${+new Date()}`,
       type: 'custom',
       position: { x: Math.random() * 400, y: Math.random() * 400 },
-      data: { label }, 
+      data: { label, deleteNode },
     };
 
     setNodes((nds) => [...nds, newNode]);
