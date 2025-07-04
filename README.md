@@ -15,9 +15,9 @@ Users can visually add nodes, draw edges, validate the structure, and apply auto
 
 ## 📸 Screenshots
 
-| Add Nodes | Auto Layout | DAG Validation |
+| Valid DAG | Cycle Detection | Auto Layout |
 |-----------|-------------|----------------|
-| ![Add Node](screenshots/add-node.png) | ![Auto Layout](screenshots/auto-layout.png) | ![Valid DAG](screenshots/valid-dag.png) |
+| ![Add Node](screenshots/valid_DAG.png) | ![Auto Layout](screenshots/cycle_detection.png) | ![Valid DAG](screenshots/auto_layout.png) |
 
 > Create a folder named `screenshots/` and place your screenshots there.
 
